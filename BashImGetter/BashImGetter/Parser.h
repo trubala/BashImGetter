@@ -13,6 +13,8 @@ class Parser{
 
 public:
 
+	//run func to Parse
+	//this func recive string getting from url (getString())
 	vector<std::string> doParse(string& s);
 
 private:
