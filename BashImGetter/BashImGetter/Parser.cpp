@@ -32,7 +32,7 @@ vector<std::string> Parser::doParse(string& s){
 			s = s.substr(pos + 1);
 		}else{
 			if(!oneMatch)
-				MessageBoxA(0, "Find = - 1", "Erorr", 0);
+				MessageBoxA(0, "Getted content don't have '\n' symbols", "Error Parse", 0);
 			break;
 		}
 	}
