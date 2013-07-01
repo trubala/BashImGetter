@@ -24,6 +24,7 @@
 
 
 
+
 #ifndef _AFX_NO_OLE_SUPPORT
 #include <afxdtctl.h>           // поддержка MFC для типовых элементов управления Internet Explorer 4
 #endif

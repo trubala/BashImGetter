@@ -11,14 +11,14 @@
 #include "resource.h"		// основные символы
 
 
-// CBiGGUIApp:
+// CBashGUIApp:
 // О реализации данного класса см. BashImGetterGUI.cpp
 //
 
-class CBiGGUIApp : public CWinApp
+class CBashGUIApp : public CWinApp
 {
 public:
-	CBiGGUIApp();
+	CBashGUIApp();
 
 // Переопределение
 public:
@@ -29,4 +29,4 @@ public:
 	DECLARE_MESSAGE_MAP()
 };
 
-extern CBiGGUIApp theApp;
+extern CBashGUIApp theApp;

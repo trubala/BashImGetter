@@ -4,23 +4,23 @@
 
 #include "stdafx.h"
 #include "BashImGetterGUI.h"
-#include "BiGGUIDlg.h"
+#include "BashGUIDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
 
-// CBiGGUIApp
+// CBashGUIApp
 
-BEGIN_MESSAGE_MAP(CBiGGUIApp, CWinApp)
+BEGIN_MESSAGE_MAP(CBashGUIApp, CWinApp)
 	ON_COMMAND(ID_HELP, &CWinApp::OnHelp)
 END_MESSAGE_MAP()
 
 
-// создание CBiGGUIApp
+// создание CBashGUIApp
 
-CBiGGUIApp::CBiGGUIApp()
+CBashGUIApp::CBashGUIApp()
 {
 	// поддержка диспетчера перезагрузки
 	m_dwRestartManagerSupportFlags = AFX_RESTART_MANAGER_SUPPORT_RESTART;
@@ -30,14 +30,14 @@ CBiGGUIApp::CBiGGUIApp()
 }
 
 
-// Единственный объект CBiGGUIApp
+// Единственный объект CBashGUIApp
 
-CBiGGUIApp theApp;
+CBashGUIApp theApp;
 
 
-// инициализация CBiGGUIApp
+// инициализация CBashGUIApp
 
-BOOL CBiGGUIApp::InitInstance()
+BOOL CBashGUIApp::InitInstance()
 {
 	// InitCommonControlsEx() требуется для Windows XP, если манифест
 	// приложения использует ComCtl32.dll версии 6 или более поздней версии для включения
@@ -70,7 +70,7 @@ BOOL CBiGGUIApp::InitInstance()
 	// например на название организации
 	SetRegistryKey(_T("Локальные приложения, созданные с помощью мастера приложений"));
 
-	CBiGrGUIDlg dlg;
+	CBashGUIDlg dlg;
 	m_pMainWnd = &dlg;
 	INT_PTR nResponse = dlg.DoModal();
 	if (nResponse == IDOK)

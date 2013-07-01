@@ -1,15 +1,25 @@
-﻿Построение начато 30.06.2013 0:54:26.
-Проект "C:\Users\1\Documents\GitHub\BashImGetter\BashImGetterGUI\BashImGetterGUI\BashImGetterGUI.vcxproj" в узле 2 (целевые объекты Build).
-ResourceCompile:
-  C:\Program Files\Windows Kits\8.0\bin\x86\rc.exe /D _DEBUG /D _UNICODE /D UNICODE /l"0x0419" /IDebug\ /nologo /fo"Debug\BashImGetterGUI.res" BashImGetterGUI.rc 
-Link:
-  C:\Program Files\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\1\Documents\GitHub\BashImGetter\BashImGetterGUI\Debug\BashImGetterGUI.exe" /INCREMENTAL /NOLOGO /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /manifestinput:"C:\Program Files\Microsoft Visual Studio 11.0\VC\Include\Manifest\dpiaware.manifest" /DEBUG /PDB:"C:\Users\1\Documents\GitHub\BashImGetter\BashImGetterGUI\Debug\BashImGetterGUI.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /ENTRY:"wWinMainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\1\Documents\GitHub\BashImGetter\BashImGetterGUI\Debug\BashImGetterGUI.lib" /MACHINE:X86 Debug\BashImGetterGUI.res
-  Debug\BashImGetterGUI.obj
-  Debug\BiGGUIDlg.obj
-  Debug\stdafx.obj
-  BashImGetterGUI.vcxproj -> C:\Users\1\Documents\GitHub\BashImGetter\BashImGetterGUI\Debug\BashImGetterGUI.exe
-Построение проекта "C:\Users\1\Documents\GitHub\BashImGetter\BashImGetterGUI\BashImGetterGUI\BashImGetterGUI.vcxproj" завершено (целевые объекты Build).
+﻿Построение начато 30.06.2013 23:10:31.
+     1>Проект "C:\Users\Ivan\Documents\Visual Studio 2012\Projects\BashImGetterGUI\BashImGetterGUI\BashImGetterGUI.vcxproj" в узле 2 (целевые объекты Build).
+     1>InitializeBuildStatus:
+         Создание "Debug\BashImGetterGUI.unsuccessfulbuild", так как было задано "AlwaysCreate".
+       ClCompile:
+         Для всех выходных данных обновления не требуется.
+         Для всех выходных данных обновления не требуется.
+       ResourceCompile:
+         C:\Program Files\Windows Kits\8.0\bin\x86\rc.exe /D _DEBUG /D _UNICODE /D UNICODE /l"0x0419" /IDebug\ /nologo /fo"Debug\BashImGetterGUI.res" BashImGetterGUI.rc 
+       Link:
+         C:\Program Files\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Ivan\Documents\Visual Studio 2012\Projects\BashImGetterGUI\Debug\BashImGetterGUI.exe" /INCREMENTAL /NOLOGO curllib.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /manifestinput:"C:\Program Files\Microsoft Visual Studio 11.0\VC\Include\Manifest\dpiaware.manifest" /DEBUG /PDB:"C:\Users\Ivan\Documents\Visual Studio 2012\Projects\BashImGetterGUI\Debug\BashImGetterGUI.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /ENTRY:"wWinMainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Ivan\Documents\Visual Studio 2012\Projects\BashImGetterGUI\Debug\BashImGetterGUI.lib" /MACHINE:X86 Debug\BashImGetterGUI.res
+         Debug\BashGUIDlg.obj
+         Debug\BashImGetterGUI.obj
+         Debug\GetData.obj
+         Debug\Parser.obj
+         Debug\stdafx.obj
+         BashImGetterGUI.vcxproj -> C:\Users\Ivan\Documents\Visual Studio 2012\Projects\BashImGetterGUI\Debug\BashImGetterGUI.exe
+       FinalizeBuildStatus:
+         Файл "Debug\BashImGetterGUI.unsuccessfulbuild" удаляется.
+         Обращение к "Debug\BashImGetterGUI.lastbuildstate".
+     1>Построение проекта "C:\Users\Ivan\Documents\Visual Studio 2012\Projects\BashImGetterGUI\BashImGetterGUI\BashImGetterGUI.vcxproj" завершено (целевые объекты Build).
 
 Построение успешно завершено.
 
-Затраченное время: 00:00:03.97
+Затраченное время: 00:00:00.55

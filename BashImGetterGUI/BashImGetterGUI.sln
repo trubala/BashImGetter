@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BashImGetterGUI", "BashImGetterGUI\BashImGetterGUI.vcxproj", "{150C3CA7-AD14-443C-9BB3-B99299C6E073}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BashImGetterGUI", "BashImGetterGUI\BashImGetterGUI.vcxproj", "{6C4C48A8-E004-4EC4-A07A-60BF417FC452}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +9,10 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{150C3CA7-AD14-443C-9BB3-B99299C6E073}.Debug|Win32.ActiveCfg = Debug|Win32
-		{150C3CA7-AD14-443C-9BB3-B99299C6E073}.Debug|Win32.Build.0 = Debug|Win32
-		{150C3CA7-AD14-443C-9BB3-B99299C6E073}.Release|Win32.ActiveCfg = Release|Win32
-		{150C3CA7-AD14-443C-9BB3-B99299C6E073}.Release|Win32.Build.0 = Release|Win32
+		{6C4C48A8-E004-4EC4-A07A-60BF417FC452}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6C4C48A8-E004-4EC4-A07A-60BF417FC452}.Debug|Win32.Build.0 = Debug|Win32
+		{6C4C48A8-E004-4EC4-A07A-60BF417FC452}.Release|Win32.ActiveCfg = Release|Win32
+		{6C4C48A8-E004-4EC4-A07A-60BF417FC452}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
