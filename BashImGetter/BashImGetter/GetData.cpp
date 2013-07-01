@@ -1,58 +1,84 @@
 
+#include "stdafx.h"
 
-#include <Windows.h>
-#include <cstdio>
-#include <cstdlib>
-#include <iostream>
-#include "curl.h"
+#include "GetData.h"
 
-size_t write_data( char *ptr, size_t size, size_t nmemb, FILE* data)
+
+using namespace std;
+
+//объявляем буфер, для хранения возможной ошибки, размер определяется в самой библиотеке
+
+static char errorBuffer[CURL_ERROR_SIZE];
+
+//объявляем буфер принимаемых данных
+
+static string buffer;
+
+//функция обратного вызова
+
+static int writer(char *data, size_t size, size_t nmemb, string *buffer)
+
 {
-    return fwrite(ptr, size, nmemb, data);
-}
 
+  //переменная - результат, по умолчанию нулевая
 
-VOID getData(wchar_t url){
+  int result = 0;
 
-	 // Открываем файл для тела
- 
-    std::FILE *bodyfile = 0;
-    errno_t err; 
-    err =  fopen_s(&bodyfile, "body.txt", "w");
-    if (err !=0) {
-		std::perror("Error");
-		std::cin.get();
-		std::exit(1);
-	}
-    // Выполняем  запрос
- 
-    CURL *curl_handle = curl_easy_init();
- 
-    if(curl_handle)
-        {
-            curl_easy_setopt(curl_handle, CURLOPT_URL, "http://bash.im");
- 
-            // сохраняем тело  
-            curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, bodyfile);
-            curl_easy_setopt(curl_handle, CURLOPT_WRITEFUNCTION, write_data);
- 
-           
-            CURLcode res = curl_easy_perform(curl_handle);
-            if(res != CURLE_OK)
-			std::cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << std::endl;
-            curl_easy_cleanup(curl_handle);
-        }
- 
-    puts("\nDone!");
-    return 0;
+  //проверяем буфер
 
+  if (buffer != NULL)
+
+  {
+
+    //добавляем к буферу строки из data, в количестве nmemb
+
+    buffer->append(data, size * nmemb);
+
+    //вычисляем объем принятых данных
+
+    result = size * nmemb;
+
+  }
+
+  //возвращаем результат
+
+  return result;
 
 }
 
 
+vector<std::string> GetData::GetDataFromUrl(std::string url){ 
+	CURL *curl; 
+	CURLcode result; 
+
+	curl = curl_easy_init(); 
+	if(curl) { 
+		//определяем, куда выводить ошибки
+		curl_easy_setopt(curl, CURLOPT_ERRORBUFFER, errorBuffer);
+		//задаем опцию - получить страницу по адресу 
+		curl_easy_setopt(curl, CURLOPT_URL, url.c_str()); 
+		// переадресация, если необходимо
+		curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L); 
+
+		//указываем функцию обратного вызова для записи получаемых данных
+        	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writer);
+       		 //указываем куда записывать принимаемые данные
+        	curl_easy_setopt(curl, CURLOPT_WRITEDATA, &buffer);
+		//запускаем выполнение задачи
+		result = curl_easy_perform(curl); 
+		Parser parser;
+		resultQuote = parser.doParse(buffer);
+
+		//проверяем успешность выполнения операции
+		if(result != CURLE_OK) 
+			MessageBoxA(0, "Error: get url is bad", "ERROR", 0) ; 
+
+		//завершаем сессию
+		curl_easy_cleanup(curl); 
+
+	} 
 
 
-//Test runner
-int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR, int){
-	return 0;
+	return resultQuote;
 }
+
