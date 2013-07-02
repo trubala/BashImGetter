@@ -1,12 +1,15 @@
-﻿Построение начато 30.06.2013 23:10:31.
+﻿Построение начато 01.07.2013 23:39:48.
      1>Проект "C:\Users\Ivan\Documents\Visual Studio 2012\Projects\BashImGetterGUI\BashImGetterGUI\BashImGetterGUI.vcxproj" в узле 2 (целевые объекты Build).
      1>InitializeBuildStatus:
          Создание "Debug\BashImGetterGUI.unsuccessfulbuild", так как было задано "AlwaysCreate".
        ClCompile:
          Для всех выходных данных обновления не требуется.
-         Для всех выходных данных обновления не требуется.
+         C:\Program Files\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\BashImGetterGUI.pch" /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Parser.cpp
+         Parser.cpp
+     1>c:\users\ivan\documents\visual studio 2012\projects\bashimgettergui\bashimgettergui\parser.cpp(46): warning C4018: <: несоответствие типов со знаком и без знака
+     1>c:\users\ivan\documents\visual studio 2012\projects\bashimgettergui\bashimgettergui\parser.cpp(63): warning C4018: <: несоответствие типов со знаком и без знака
        ResourceCompile:
-         C:\Program Files\Windows Kits\8.0\bin\x86\rc.exe /D _DEBUG /D _UNICODE /D UNICODE /l"0x0419" /IDebug\ /nologo /fo"Debug\BashImGetterGUI.res" BashImGetterGUI.rc 
+         Для всех выходных данных обновления не требуется.
        Link:
          C:\Program Files\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Ivan\Documents\Visual Studio 2012\Projects\BashImGetterGUI\Debug\BashImGetterGUI.exe" /INCREMENTAL /NOLOGO curllib.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /manifestinput:"C:\Program Files\Microsoft Visual Studio 11.0\VC\Include\Manifest\dpiaware.manifest" /DEBUG /PDB:"C:\Users\Ivan\Documents\Visual Studio 2012\Projects\BashImGetterGUI\Debug\BashImGetterGUI.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /ENTRY:"wWinMainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Ivan\Documents\Visual Studio 2012\Projects\BashImGetterGUI\Debug\BashImGetterGUI.lib" /MACHINE:X86 Debug\BashImGetterGUI.res
          Debug\BashGUIDlg.obj
@@ -22,4 +25,4 @@
 
 Построение успешно завершено.
 
-Затраченное время: 00:00:00.55
+Затраченное время: 00:00:05.19

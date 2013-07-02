@@ -52,7 +52,11 @@ vector<std::string> Parser::doParse(string& s){
 		{
 			string resultMatch = match[1].str().c_str();
 			replaceAll(resultMatch, "<br>", "\r\n");
+			replaceAll(resultMatch, "<br />", "\r\n");
 			replaceAll(resultMatch, "&quot;", "\"");
+			replaceAll(resultMatch, "&lt;", "<");
+			replaceAll(resultMatch, "&gt;", ">");
+			replaceAll(resultMatch, "&#039;", "'");
 
 			if(resultMatch.size() > maxLineLength){
 				int j = maxLineLength;
