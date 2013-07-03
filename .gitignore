@@ -3,6 +3,7 @@
 *.lo
 *.o
 
+
 # Compiled Dynamic libraries
 *.so
 *.dylib
@@ -11,3 +12,9 @@
 *.lai
 *.la
 *.a
+
+#[edit]
+*.sln
+*.sdf
+Debug/*
+BashImGetterGUI/debug/*
