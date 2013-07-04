@@ -17,3 +17,4 @@
 *.sdf
 Debug/*
 BashImGetterGUI/debug/*
+"Rakefile" 
