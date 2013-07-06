@@ -1,120 +1,42 @@
-//
-//#include "stdafx.h"
-//
-//#include "GetData.h"
-//
-//
-//
-//using namespace std;
-
-//string& getString() { 
-//	static std::string s; 
-//	return s; 
-//} 
-//
-//
-//size_t write_data(void *ptr, size_t size, size_t nmemb, void *stream) 
-//{ 
-//	size_t totalSize = nmemb * size; 
-//
-//	char *str = new char[totalSize + 1]; 
-//	memcpy(str, ptr, totalSize); 
-//
-//	str[totalSize] = '\0'; 
-//
-//	std::string& result = getString(); 
-//	result += str; 
-//
-//	delete [] str;
-//
-//	return totalSize; 
-//} 
-//
-//
-//vector<std::string> GetData::GetDataFromUrl(std::string url){ 
-//	CURL *curl; 
-//	CURLcode res; 
-//
-//	curl = curl_easy_init(); 
-//	if(curl) { 
-//		curl_easy_setopt(curl, CURLOPT_URL, url.c_str()); 
-//		/* example.com is redirected, so we tell libcurl to follow redirection */ 
-//		curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L); 
-//
-//		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data); 
-//
-//
-//
-//		/* Perform the request, res will get the return code */ 
-//		res = curl_easy_perform(curl); 
-//
-//		Parser parser;
-//		resultQuote = parser.doParse(getString());
-//
-//
-//		/* Check for errors */ 
-//		if(res != CURLE_OK) 
-//			MessageBoxA(0, "Error: get url is bad", "ERROR", 0) ; 
-//
-//		/* always cleanup */ 
-//		curl_easy_cleanup(curl); 
-//
-//	} 
-//
-//
-//	return resultQuote;
-//}
-
 
 #include "stdafx.h"
-
+#include "curl\curl.h" 
 #include "GetData.h"
+#include <clocale>
+#include <cwchar>
 
 
 using namespace std;
 
 //объявляем буфер, для хранения возможной ошибки, размер определяется в самой библиотеке
-
 static char errorBuffer[CURL_ERROR_SIZE];
 
 //объявляем буфер принимаемых данных
-
 static string buffer;
 
-//функция обратного вызова
+// расширенная строка для конверсии буфера
+wstring wbuffer;
 
+//функция обратного вызова
 static int writer(char *data, size_t size, size_t nmemb, string *buffer)
 
 {
-
   //переменная - результат, по умолчанию нулевая
-
   int result = 0;
-
   //проверяем буфер
-
-  if (buffer != NULL)
-
-  {
-
+  if (buffer != NULL)  {
     //добавляем к буферу строки из data, в количестве nmemb
-
     buffer->append(data, size * nmemb);
-
     //вычисляем объем принятых данных
-
     result = size * nmemb;
-
   }
-
   //возвращаем результат
-
   return result;
-
 }
 
 
 vector<std::string> GetData::GetDataFromUrl(std::string url){ 
+	std::setlocale(LC_ALL, "Russian_Russia.1251");
 	CURL *curl; 
 	CURLcode result; 
 
@@ -133,9 +55,16 @@ vector<std::string> GetData::GetDataFromUrl(std::string url){
         	curl_easy_setopt(curl, CURLOPT_WRITEDATA, &buffer);
 		//запускаем выполнение задачи
 		result = curl_easy_perform(curl); 
+		// вариант конверсии buffer to wstring
+		for (long int i=0; i<buffer.size(); ++i) {
+			wbuffer[i] = std::btowc(buffer[i]);
+			if (wbuffer[i] == WEOF)
+				MessageBoxA(0, "Error conversion", "Error", 0);
+		}
+		wbuffer.push_back('\0');
 		Parser parser;
-		resultQuote = parser.doParse(buffer);
-
+		resultQuote = parser.doParse(wbuffer);
+		
 		//проверяем успешность выполнения операции
 		if(result != CURLE_OK) 
 			MessageBoxA(0, "Error: get url is bad", "ERROR", 0) ; 
