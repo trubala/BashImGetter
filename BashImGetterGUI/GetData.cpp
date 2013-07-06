@@ -62,6 +62,8 @@ vector<std::string> GetData::GetDataFromUrl(std::string url){
 				MessageBoxA(0, "Error conversion", "Error", 0);
 		}
 		wbuffer.push_back('\0');
+		// или по-другому
+		// wstring wbuffer(buffer.begin(), buffer.end());
 		Parser parser;
 		resultQuote = parser.doParse(wbuffer);
 		
