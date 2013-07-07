@@ -51,4 +51,6 @@ public:
 	afx_msg void OnBnClickedMfcmenubutton1();
 	afx_msg void OnEnChangeEdit1();
 	CString textEdit;
+	afx_msg void OnBnClickedAbyss();
+	afx_msg void OnBnClickedTopAbyss();
 };

@@ -84,6 +84,8 @@ BEGIN_MESSAGE_MAP(CBashGUIDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_NEW, &CBashGUIDlg::OnBnClickedNew)
 	//	ON_BN_CLICKED(IDC_MFCMENUBUTTON1, &CBashGUIDlg::OnBnClickedMfcmenubutton1)
 	ON_EN_CHANGE(IDC_EDIT1, &CBashGUIDlg::OnEnChangeEdit1)
+	ON_BN_CLICKED(IDC_ABYSS, &CBashGUIDlg::OnBnClickedAbyss)
+	ON_BN_CLICKED(IDC_TOP_ABYSS, &CBashGUIDlg::OnBnClickedTopAbyss)
 END_MESSAGE_MAP()
 
 
@@ -275,4 +277,18 @@ void CBashGUIDlg::OnBnClickedNew()
 void CBashGUIDlg::OnEnChangeEdit1()
 {
 
+}
+
+
+void CBashGUIDlg::OnBnClickedAbyss()
+{
+	// TODO: добавьте свой код обработчика уведомлений
+	MessageBox(L"Abyss", L"WTF?", MB_OK | MB_ICONINFORMATION);
+}
+
+
+void CBashGUIDlg::OnBnClickedTopAbyss()
+{
+	// TODO: добавьте свой код обработчика уведомлений
+	MessageBox(L"Top of Abyss", L"WTF?", MB_OK | MB_ICONINFORMATION);
 }
