@@ -7,6 +7,8 @@
 #include "BashGUIDlg.h"
 #include "afxdialogex.h"
 
+#include "MapHtmlCode.h"
+
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -65,6 +67,13 @@ CBashGUIDlg::CBashGUIDlg(CWnd* pParent /*=NULL*/)
 	bestQuoteClick = false;
 	randomQuoteClick = false;
 	textEditBufferSize = 0;
+
+
+
+	
+	load.loadUpFromFile("HtmlCodes.txt");
+	//load.test_getViewByName("&Theta;");
+
 
 }
 
@@ -182,11 +191,11 @@ void CBashGUIDlg::OnBnClickedRefresh()
 	quotes.clear();
 
 	if(newQuoteClick)
-		quotes = getData.GetDataFromUrl(newQuote);
+		quotes = getData.GetDataFromUrl(newQuote, load);
 	else if(bestQuoteClick)
-		quotes = getData.GetDataFromUrl(bestQuote);
+		quotes = getData.GetDataFromUrl(bestQuote, load);
 	else
-		quotes = getData.GetDataFromUrl(randomQuote);
+		quotes = getData.GetDataFromUrl(randomQuote, load);
 
 }
 
@@ -202,7 +211,7 @@ void CBashGUIDlg::OnBnClickedBest()
 	quotes.clear();
 	
 
-	quotes = getData.GetDataFromUrl(bestQuote);
+	quotes = getData.GetDataFromUrl(bestQuote, load);
 
 	setQuotes(quotes);
 
@@ -216,15 +225,15 @@ void CBashGUIDlg::OnBnClickedBest()
 void CBashGUIDlg::setQuotes(vector<std::string>& quotes){
 	
 	
-	CString buffer;
-	CString split("\r\n===============================================\r\n");
+	CStringW buffer;
+	CStringW split("\r\n===============================================\r\n");
 
 	if(textEditBufferSize > 0)
 		textEdit.Delete(0, textEditBufferSize);
 
-	for(int i = 0; i < quotes.size(); ++i)
+	for(unsigned i = 0; i < quotes.size(); ++i)
 	{
-		CString str(quotes.at(i).c_str());
+		CStringW str(quotes.at(i).c_str());
 		buffer += split;
 		buffer += str;
 		buffer += split;
@@ -247,7 +256,7 @@ void CBashGUIDlg::OnBnClickedRandom()
 	randomQuoteClick = true;
 	quotes.clear();
 
-	quotes = getData.GetDataFromUrl(randomQuote);
+	quotes = getData.GetDataFromUrl(randomQuote, load);
 
 	setQuotes(quotes);
 }
@@ -263,7 +272,7 @@ void CBashGUIDlg::OnBnClickedNew()
 	randomQuoteClick = false;
 	quotes.clear();
 
-	quotes = getData.GetDataFromUrl(newQuote);
+	quotes = getData.GetDataFromUrl(newQuote, load);
 
 	setQuotes(quotes);
 

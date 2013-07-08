@@ -1,3 +1,5 @@
+
+
 #include <vector>
 #include <Windows.h>
 
@@ -5,10 +7,8 @@
 #include <string>
 
 
-using namespace std;
+#include "MapHtmlCode.h"
 
-const std::string regexGetQuote = ".*<div class=\"text\">(.*)</div>";
-const int maxLineLength = 80;
 
 class Parser{
 
@@ -16,9 +16,18 @@ public:
 
 	//run func to Parse
 	//this func recive string getting from url (getString())
-	vector<std::string> doParse(string& s);
+	std::vector<std::string> doParse(std::string& s, MapHtmlCode map);
+
+	int getMaxLineLength();
+
+	std::string getRegexQuote();
+
+	std::string getHtmlSpecSymbolsRegexByName();
+	std::string getHtmlSpecSymbolsRegexByCode();
 
 private:
 	void replaceAll(std::string& str, const std::string& from, const std::string& to);
+
+	std::string Parser::replace(std::string &resultLine, const std::string &source, const std::string &dest);
 
 };
