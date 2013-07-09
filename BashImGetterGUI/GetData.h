@@ -1,8 +1,7 @@
 #include <Windows.h>	
 
 #include <string> 
-
-#include "curl\curl.h" 
+ 
 #include "Parser.h"
 
 class GetData{

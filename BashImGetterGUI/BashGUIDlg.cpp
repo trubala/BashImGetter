@@ -93,6 +93,7 @@ BEGIN_MESSAGE_MAP(CBashGUIDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_NEW, &CBashGUIDlg::OnBnClickedNew)
 	//	ON_BN_CLICKED(IDC_MFCMENUBUTTON1, &CBashGUIDlg::OnBnClickedMfcmenubutton1)
 	ON_EN_CHANGE(IDC_EDIT1, &CBashGUIDlg::OnEnChangeEdit1)
+	ON_BN_CLICKED(IDC_BUTTON1, &CBashGUIDlg::OnBnClickedButton1)
 END_MESSAGE_MAP()
 
 
@@ -284,4 +285,11 @@ void CBashGUIDlg::OnBnClickedNew()
 void CBashGUIDlg::OnEnChangeEdit1()
 {
 
+}
+
+
+void CBashGUIDlg::OnBnClickedButton1()
+{
+	// Вызов браузера по умолчанию для цитаты на bash.im
+	ShellExecuteA(NULL, "open", "http://bash.im/add", NULL, NULL, SW_SHOWNORMAL);
 }
