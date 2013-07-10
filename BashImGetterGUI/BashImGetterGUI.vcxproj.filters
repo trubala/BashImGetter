@@ -42,6 +42,12 @@
     <ClInclude Include="GetData.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
+<<<<<<< HEAD:BashImGetterGUI/BashImGetterGUI.vcxproj.filters
+=======
+    <ClInclude Include="MapHtmlCode.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+>>>>>>> tb:BashImGetterGUI/BashImGetterGUI.vcxproj.filters
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BashImGetterGUI.cpp">
@@ -59,6 +65,12 @@
     <ClCompile Include="GetData.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
+<<<<<<< HEAD:BashImGetterGUI/BashImGetterGUI.vcxproj.filters
+=======
+    <ClCompile Include="MapHtmlCode.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+>>>>>>> tb:BashImGetterGUI/BashImGetterGUI.vcxproj.filters
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="BashImGetterGUI.rc">

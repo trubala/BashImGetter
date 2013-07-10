@@ -1,15 +1,14 @@
 #include <Windows.h>	
 
 #include <string> 
-
-#include "curl\curl.h" 
+ 
 #include "Parser.h"
 
 class GetData{
 public:
-	vector<std::string> GetDataFromUrl(std::string url);
+	std::vector<std::string> GetDataFromUrl(std::string url, const MapHtmlCode &m);
 
-	vector<std::string> resultQuote;
+	std::vector<std::string> resultQuote;
 
 //private:
 	//string& getString();

@@ -5,6 +5,7 @@
 
 #pragma once
 
+using namespace std;
 
 // диалоговое окно CBashGUIDlg
 class CBashGUIDlg : public CDialogEx
@@ -19,6 +20,8 @@ public:
 	bool newQuoteClick;
 	bool randomQuoteClick;
 	bool bestQuoteClick;
+
+	MapHtmlCode load;
 
 	vector<std::string> quotes;
 	int textEditBufferSize;
@@ -51,4 +54,5 @@ public:
 	afx_msg void OnBnClickedMfcmenubutton1();
 	afx_msg void OnEnChangeEdit1();
 	CString textEdit;
+	afx_msg void OnBnClickedButton1();
 };
