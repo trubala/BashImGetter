@@ -17,4 +17,5 @@
 #[edit]
 *.sdf
 Debug/*
-BashImGetterGUI/debug/*
+ipch/*
+BashImGetterGUI/Debug/*
