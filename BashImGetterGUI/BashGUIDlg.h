@@ -10,16 +10,14 @@ using namespace std;
 // диалоговое окно CBashGUIDlg
 class CBashGUIDlg : public CDialogEx
 {
-// Создание
+	// Создание
 public:
 	CBashGUIDlg(CWnd* pParent = NULL);	// стандартный конструктор
-	
+
 
 	GetData getData;
 
-	bool newQuoteClick;
-	bool randomQuoteClick;
-	bool bestQuoteClick;
+	enum CurrentCategoryQuotes {kNewQuotes, kRandomQuotes, kBestQuotes, kAbyssQuotes, kAbyssTopQuotes};
 
 	MapHtmlCode load;
 
@@ -27,16 +25,16 @@ public:
 	int textEditBufferSize;
 
 	void setQuotes(vector<std::string>& quotes);
-	
 
-// Данные диалогового окна
+
+	// Данные диалогового окна
 	enum { IDD = IDD_BASHIMGETTERGUI_DIALOG };
 
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// поддержка DDX/DDV
 
 
-// Реализация
+	// Реализация
 protected:
 	HICON m_hIcon;
 
@@ -52,7 +50,12 @@ public:
 	afx_msg void OnBnClickedRandom();
 	afx_msg void OnBnClickedNew();
 	afx_msg void OnBnClickedMfcmenubutton1();
-	afx_msg void OnEnChangeEdit1();
 	CString textEdit;
-	afx_msg void OnBnClickedButton1();
+	afx_msg void OnBnClickedAbyss();
+	afx_msg void OnBnClickedTopAbyss();
+
+private:
+	CurrentCategoryQuotes currentCategoryQuotes;
+public:
+	afx_msg void OnBnClickedAdd();
 };

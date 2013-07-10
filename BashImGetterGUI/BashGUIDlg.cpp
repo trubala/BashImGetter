@@ -1,5 +1,5 @@
-
-// BashGUIDlg.cpp : файл реализации
+п»ї
+// BashGUIDlg.cpp : С„Р°Р№Р» СЂРµР°Р»РёР·Р°С†РёРё
 //
 
 #include "stdafx.h"
@@ -17,25 +17,27 @@
 using namespace std;
 
 
-const string newQuote = "http://bash.im";
-const string bestQuote = "http://bash.im/best";
-const string randomQuote = "http://bash.im/random";
+const char *newQuote = "http://bash.im";
+const char *bestQuote = "http://bash.im/best";
+const char *randomQuote = "http://bash.im/random";
+const char *abyss = "http://bash.im/abyss";
+const char *topAbyss = "http://bash.im/abysstop";
 
 
-// Диалоговое окно CAboutDlg используется для описания сведений о приложении
+// Р”РёР°Р»РѕРіРѕРІРѕРµ РѕРєРЅРѕ CAboutDlg РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РґР»СЏ РѕРїРёСЃР°РЅРёСЏ СЃРІРµРґРµРЅРёР№ Рѕ РїСЂРёР»РѕР¶РµРЅРёРё
 
 class CAboutDlg : public CDialogEx
 {
 public:
 	CAboutDlg();
 
-	// Данные диалогового окна
+	// Р”Р°РЅРЅС‹Рµ РґРёР°Р»РѕРіРѕРІРѕРіРѕ РѕРєРЅР°
 	enum { IDD = IDD_ABOUTBOX };
 
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // поддержка DDX/DDV
+	virtual void DoDataExchange(CDataExchange* pDX);    // РїРѕРґРґРµСЂР¶РєР° DDX/DDV
 
-	// Реализация
+	// Р РµР°Р»РёР·Р°С†РёСЏ
 protected:
 	DECLARE_MESSAGE_MAP()
 };
@@ -53,7 +55,7 @@ BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
 END_MESSAGE_MAP()
 
 
-// диалоговое окно CBashGUIDlg
+// РґРёР°Р»РѕРіРѕРІРѕРµ РѕРєРЅРѕ CBashGUIDlg
 
 
 
@@ -63,14 +65,11 @@ CBashGUIDlg::CBashGUIDlg(CWnd* pParent /*=NULL*/)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 
-	newQuoteClick = false;
-	bestQuoteClick = false;
-	randomQuoteClick = false;
 	textEditBufferSize = 0;
 
 
 
-	
+
 	load.loadUpFromFile("HtmlCodes.txt");
 	//load.test_getViewByName("&Theta;");
 
@@ -92,20 +91,22 @@ BEGIN_MESSAGE_MAP(CBashGUIDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_RANDOM, &CBashGUIDlg::OnBnClickedRandom)
 	ON_BN_CLICKED(IDC_NEW, &CBashGUIDlg::OnBnClickedNew)
 	//	ON_BN_CLICKED(IDC_MFCMENUBUTTON1, &CBashGUIDlg::OnBnClickedMfcmenubutton1)
-	ON_EN_CHANGE(IDC_EDIT1, &CBashGUIDlg::OnEnChangeEdit1)
-	ON_BN_CLICKED(IDC_BUTTON1, &CBashGUIDlg::OnBnClickedButton1)
+	//ON_BN_CLICKED(IDC_BUTTON1, &CBashGUIDlg::OnBnClickedButton1)
+	ON_BN_CLICKED(IDC_ABYSS, &CBashGUIDlg::OnBnClickedAbyss)
+	ON_BN_CLICKED(IDC_TOP_ABYSS, &CBashGUIDlg::OnBnClickedTopAbyss)
+	ON_BN_CLICKED(IDC_ADD, &CBashGUIDlg::OnBnClickedAdd)
 END_MESSAGE_MAP()
 
 
-// обработчики сообщений CBashGUIDlg
+// РѕР±СЂР°Р±РѕС‚С‡РёРєРё СЃРѕРѕР±С‰РµРЅРёР№ CBashGUIDlg
 
 BOOL CBashGUIDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
-	// Добавление пункта "О программе..." в системное меню.
+	// Р”РѕР±Р°РІР»РµРЅРёРµ РїСѓРЅРєС‚Р° "Рћ РїСЂРѕРіСЂР°РјРјРµ..." РІ СЃРёСЃС‚РµРјРЅРѕРµ РјРµРЅСЋ.
 
-	// IDM_ABOUTBOX должен быть в пределах системной команды.
+	// IDM_ABOUTBOX РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РІ РїСЂРµРґРµР»Р°С… СЃРёСЃС‚РµРјРЅРѕР№ РєРѕРјР°РЅРґС‹.
 	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
 	ASSERT(IDM_ABOUTBOX < 0xF000);
 
@@ -123,14 +124,10 @@ BOOL CBashGUIDlg::OnInitDialog()
 		}
 	}
 
-	// Задает значок для этого диалогового окна. Среда делает это автоматически,
-	//  если главное окно приложения не является диалоговым
-	SetIcon(m_hIcon, TRUE);			// Крупный значок
-	SetIcon(m_hIcon, FALSE);		// Мелкий значок
+	SetIcon(m_hIcon, TRUE);			// РљСЂСѓРїРЅС‹Р№ Р·РЅР°С‡РѕРє
+	SetIcon(m_hIcon, FALSE);		// РњРµР»РєРёР№ Р·РЅР°С‡РѕРє
 
-	// TODO: добавьте дополнительную инициализацию
-
-	return TRUE;  // возврат значения TRUE, если фокус не передан элементу управления
+	return TRUE;  // РІРѕР·РІСЂР°С‚ Р·РЅР°С‡РµРЅРёСЏ TRUE, РµСЃР»Рё С„РѕРєСѓСЃ РЅРµ РїРµСЂРµРґР°РЅ СЌР»РµРјРµРЅС‚Сѓ СѓРїСЂР°РІР»РµРЅРёСЏ
 }
 
 void CBashGUIDlg::OnSysCommand(UINT nID, LPARAM lParam)
@@ -146,19 +143,15 @@ void CBashGUIDlg::OnSysCommand(UINT nID, LPARAM lParam)
 	}
 }
 
-// При добавлении кнопки свертывания в диалоговое окно нужно воспользоваться приведенным ниже кодом,
-//  чтобы нарисовать значок. Для приложений MFC, использующих модель документов или представлений,
-//  это автоматически выполняется рабочей областью.
-
 void CBashGUIDlg::OnPaint()
 {
 	if (IsIconic())
 	{
-		CPaintDC dc(this); // контекст устройства для рисования
+		CPaintDC dc(this); // РєРѕРЅС‚РµРєСЃС‚ СѓСЃС‚СЂРѕР№СЃС‚РІР° РґР»СЏ СЂРёСЃРѕРІР°РЅРёСЏ
 
 		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
 
-		// Выравнивание значка по центру клиентского прямоугольника
+		// Р’С‹СЂР°РІРЅРёРІР°РЅРёРµ Р·РЅР°С‡РєР° РїРѕ С†РµРЅС‚СЂСѓ РєР»РёРµРЅС‚СЃРєРѕРіРѕ РїСЂСЏРјРѕСѓРіРѕР»СЊРЅРёРєР°
 		int cxIcon = GetSystemMetrics(SM_CXICON);
 		int cyIcon = GetSystemMetrics(SM_CYICON);
 		CRect rect;
@@ -166,7 +159,7 @@ void CBashGUIDlg::OnPaint()
 		int x = (rect.Width() - cxIcon + 1) / 2;
 		int y = (rect.Height() - cyIcon + 1) / 2;
 
-		// Нарисуйте значок
+		// РќР°СЂРёСЃСѓР№С‚Рµ Р·РЅР°С‡РѕРє
 		dc.DrawIcon(x, y, m_hIcon);
 	}
 	else
@@ -175,8 +168,7 @@ void CBashGUIDlg::OnPaint()
 	}
 }
 
-// Система вызывает эту функцию для получения отображения курсора при перемещении
-//  свернутого окна.
+
 HCURSOR CBashGUIDlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
@@ -186,46 +178,63 @@ HCURSOR CBashGUIDlg::OnQueryDragIcon()
 
 void CBashGUIDlg::OnBnClickedRefresh()
 {
-	// TODO: добавьте свой код обработчика уведомлений
-	//MessageBox(L"Refresh!", L"WTF?", MB_OK | MB_ICONINFORMATION);
-
 	quotes.clear();
 
-	if(newQuoteClick)
+	switch(currentCategoryQuotes){
+	case kNewQuotes:
 		quotes = getData.GetDataFromUrl(newQuote, load);
-	else if(bestQuoteClick)
+		break;
+	case kBestQuotes:
 		quotes = getData.GetDataFromUrl(bestQuote, load);
-	else
+		break;
+	case kRandomQuotes:
 		quotes = getData.GetDataFromUrl(randomQuote, load);
+		break;
+	case kAbyssQuotes:
+		quotes = getData.GetDataFromUrl(abyss, load);
+		break;
+	case kAbyssTopQuotes:
+		quotes = getData.GetDataFromUrl(topAbyss, load);
+		break;
+	};
+
 
 }
 
 
 void CBashGUIDlg::OnBnClickedBest()
 {
-	// TODO: добавьте свой код обработчика уведомлений
-	//MessageBox(L"Best!", L"WTF?", MB_OK | MB_ICONINFORMATION);
+	currentCategoryQuotes = kBestQuotes;
 
-	newQuoteClick = false;
-	bestQuoteClick = true;
-	randomQuoteClick = false;
 	quotes.clear();
-	
-
 	quotes = getData.GetDataFromUrl(bestQuote, load);
-
 	setQuotes(quotes);
-
-	
-
 
 }
 
 
+void CBashGUIDlg::OnBnClickedAbyss()
+{
+	currentCategoryQuotes = kAbyssQuotes;
+
+	quotes.clear();
+	quotes = getData.GetDataFromUrl(abyss, load);
+	setQuotes(quotes);
+}
+
+
+void CBashGUIDlg::OnBnClickedTopAbyss(){
+	currentCategoryQuotes = kAbyssTopQuotes;
+
+	quotes.clear();
+	quotes = getData.GetDataFromUrl(topAbyss, load);
+	setQuotes(quotes);
+}
+
 
 void CBashGUIDlg::setQuotes(vector<std::string>& quotes){
-	
-	
+
+
 	CStringW buffer;
 	CStringW split("\r\n===============================================\r\n");
 
@@ -238,7 +247,7 @@ void CBashGUIDlg::setQuotes(vector<std::string>& quotes){
 		buffer += split;
 		buffer += str;
 		buffer += split;
-		
+
 	}
 
 	textEditBufferSize = buffer.GetLength();
@@ -249,12 +258,8 @@ void CBashGUIDlg::setQuotes(vector<std::string>& quotes){
 
 void CBashGUIDlg::OnBnClickedRandom()
 {
-	// TODO: добавьте свой код обработчика уведомлений
-	//MessageBox(L"Random", L"WTF?", MB_OK | MB_ICONINFORMATION);
+	currentCategoryQuotes = kRandomQuotes;
 
-	newQuoteClick = false;
-	bestQuoteClick = false;
-	randomQuoteClick = true;
 	quotes.clear();
 
 	quotes = getData.GetDataFromUrl(randomQuote, load);
@@ -265,12 +270,7 @@ void CBashGUIDlg::OnBnClickedRandom()
 
 void CBashGUIDlg::OnBnClickedNew()
 {
-	// TODO: добавьте свой код обработчика уведомлений
-	//MessageBox(L"New", L"WTF?", MB_OK | MB_ICONINFORMATION);
-
-	newQuoteClick = true;
-	bestQuoteClick = false;
-	randomQuoteClick = false;
+	currentCategoryQuotes = kNewQuotes;
 	quotes.clear();
 
 	quotes = getData.GetDataFromUrl(newQuote, load);
@@ -281,15 +281,15 @@ void CBashGUIDlg::OnBnClickedNew()
 
 
 
+//void CBashGUIDlg::OnBnClickedButton1()
+//{
+//	// Р’С‹Р·РѕРІ Р±СЂР°СѓР·РµСЂР° РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ РґР»СЏ С†РёС‚Р°С‚С‹ РЅР° bash.im
+//	
+//}
 
-void CBashGUIDlg::OnEnChangeEdit1()
+
+
+void CBashGUIDlg::OnBnClickedAdd()
 {
-
-}
-
-
-void CBashGUIDlg::OnBnClickedButton1()
-{
-	// Вызов браузера по умолчанию для цитаты на bash.im
 	ShellExecuteA(NULL, "open", "http://bash.im/add", NULL, NULL, SW_SHOWNORMAL);
 }

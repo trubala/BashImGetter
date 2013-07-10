@@ -17,7 +17,37 @@ void Parser::replaceAll(std::string& str, const std::string& from, const std::st
 	}
 }
 
-vector<std::string> Parser::doParse(string& s){
+
+int Parser::getMaxLineLength(){
+	return 80;
+}
+
+string Parser::getRegexQuote(){
+	return ".*<div class=\"text\">(.*)</div>";
+}
+
+
+string Parser::getHtmlSpecSymbolsRegexByName(){
+	//return ".*?(&\\w+;)|(&.*;).*?";
+	return ".*?(&\\w+;).*?";
+}
+
+string Parser::getHtmlSpecSymbolsRegexByCode(){
+	return ".*?(&.*;).*?";
+}
+
+
+string Parser::replace(std::string &resultLine, const std::string &source, const std::string &dest){
+	unsigned index = resultLine.find(source.c_str());
+	if(index != std::string::npos){
+		unsigned len = source.length();
+		resultLine.replace(index, index + len, dest);
+
+	}
+	return resultLine;
+}
+
+vector<std::string> Parser::doParse(string& s, MapHtmlCode map){
 	vector<std::string> result;
 	vector<std::string> lineByLineStr;
 
@@ -41,30 +71,62 @@ vector<std::string> Parser::doParse(string& s){
 	//----replace line by line---- [end]
 
 	//-----get quote in bash.im-----[begin]
-	regex e (regexGetQuote);
+	regex e (getRegexQuote());
 
-	for(int i = 0; i < lineByLineStr.size(); ++i){
+	for(unsigned i = 0; i < lineByLineStr.size(); ++i){
 		string line = lineByLineStr.at(i);
 		std::smatch match;
+
 
 
 		if (std::regex_match(line, match, e))
 		{
 			string resultMatch = match[1].str().c_str();
+
+			regex findSpecSymbols (getHtmlSpecSymbolsRegexByName());
+			smatch matchSpecSymbols;
+			string symbol;
+
+			if(regex_match(resultMatch, matchSpecSymbols, findSpecSymbols)){
+
+				
+				if(!matchSpecSymbols[1].str().empty()){
+					//finded name, example = &frac34;
+					symbol = map.getViewByName(matchSpecSymbols[1].str());
+					//replace
+					resultMatch = replace(resultMatch, matchSpecSymbols[1].str(), symbol);
+
+				}
+			}
+
+			findSpecSymbols  = getHtmlSpecSymbolsRegexByCode();
+
+			if(regex_match(resultMatch, matchSpecSymbols, findSpecSymbols)){
+				if(!matchSpecSymbols[1].str().empty()){
+					//finded name, example = &#402;
+					symbol = map.getViewByCode(matchSpecSymbols[1].str());
+					//replace
+					resultMatch = replace(resultMatch, matchSpecSymbols[1].str(), symbol);
+				}
+			}
+
 			replaceAll(resultMatch, "<br>", "\r\n");
 			replaceAll(resultMatch, "<br />", "\r\n");
+			/*
 			replaceAll(resultMatch, "&quot;", "\"");
 			replaceAll(resultMatch, "&lt;", "<");
 			replaceAll(resultMatch, "&gt;", ">");
-			replaceAll(resultMatch, "&#039;", "'");
+			replaceAll(resultMatch, "&#039;", "'");*/
 
-			if(resultMatch.size() > maxLineLength){
-				int j = maxLineLength;
-				while(j < resultMatch.size()){
+			int max = getMaxLineLength();
+
+			if(resultMatch.length() > max){
+				int j = max;
+				while(j < resultMatch.length()){
 					int foundIndex = resultMatch.find(" ", j);
 					if(foundIndex != string::npos){
 						resultMatch.insert(foundIndex, "\r\n");
-						j = foundIndex + maxLineLength;
+						j = foundIndex + max;
 					}else
 						break;
 				}
