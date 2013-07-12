@@ -279,16 +279,6 @@ void CBashGUIDlg::OnBnClickedNew()
 
 }
 
-
-
-//void CBashGUIDlg::OnBnClickedButton1()
-//{
-//	// Вызов браузера по умолчанию для цитаты на bash.im
-//	
-//}
-
-
-
 void CBashGUIDlg::OnBnClickedAdd()
 {
 	ShellExecuteA(NULL, "open", "http://bash.im/add", NULL, NULL, SW_SHOWNORMAL);

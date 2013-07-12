@@ -6,7 +6,7 @@
 
 class GetData{
 public:
-	std::vector<std::string> GetDataFromUrl(std::string url, const MapHtmlCode &m);
+	std::vector<std::string> GetDataFromUrl(std::string url, MapHtmlCode &m);
 
 	std::vector<std::string> resultQuote;
 

@@ -26,7 +26,7 @@ static int writestr(char *data, size_t size, size_t nmemb, string *buffer) {
   return result;
 }
 
-vector<std::string> GetData::GetDataFromUrl(std::string url, const MapHtmlCode &m) { 
+vector<std::string> GetData::GetDataFromUrl(std::string url, MapHtmlCode &m) { 
 	CURL *curl; 
 	CURLcode result; 
 	curl = curl_easy_init(); 

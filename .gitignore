@@ -12,12 +12,18 @@
 *.lai
 *.la
 *.a
+*.dll
 
 #[edit]
 *.sdf
 Debug/*
+<<<<<<< HEAD
 BashImGetterGUI/debug/*
 <<<<<<< HEAD
 "Rakefile" 
 =======
 >>>>>>> tb
+=======
+ipch/*
+BashImGetterGUI/Debug/*
+>>>>>>> c8af06d882c5b85a543b70c6f158b9629f5aa5a4
