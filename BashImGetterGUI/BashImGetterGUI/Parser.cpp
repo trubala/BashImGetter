@@ -3,8 +3,6 @@
 
 #include "Parser.h"
 
-
-
 using namespace std;
 
 void Parser::replaceAll(std::string& str, const std::string& from, const std::string& to) {
@@ -22,56 +20,40 @@ int Parser::getMaxLineLength(){
 	return 80;
 }
 
-string Parser::getRegexQuote(){
+string Parser::getRegexGetQuote(){
 	return ".*<div class=\"text\">(.*)</div>";
 }
 
 
 string Parser::getHtmlSpecSymbolsRegexByName(){
-	//return ".*?(&\\w+;)|(&.*;).*?";
 	return ".*?(&\\w+;).*?";
 }
 
 string Parser::getHtmlSpecSymbolsRegexByCode(){
-	return ".*?(&.*;).*?";
+	return ".*?(&#.*;).*?";
 }
 
-
-string Parser::replace(std::string &resultLine, const std::string &source, const std::string &dest){
-	unsigned index = resultLine.find(source.c_str());
-	if(index != std::string::npos){
-		unsigned len = source.length();
-		resultLine.replace(index, index + len, dest);
-
-	}
-	return resultLine;
-}
-
-vector<std::string> Parser::doParse(string& s, MapHtmlCode map){
-	vector<std::string> result;
-	vector<std::string> lineByLineStr;
-
-	//----replace line by line---- [begin]
-	unsigned int pos = 0;
+vector<string> Parser::doParse(string& lineToParse, MapHtmlCode& map){
+	vector<string> result;
+	vector<string> lineByLineStr;
+	unsigned pos = 0;
 
 	bool oneMatch = false;
-	while(s.length() > 0){
-		pos = s.find("\n");
-		if(pos != -1){
+	while(lineToParse.length() > 0){
+		pos = lineToParse.find("\n");
+		if(pos != string::npos){
 			oneMatch = true;
-			string subString = s.substr(0, pos);
+			string subString = lineToParse.substr(0, pos);
 			lineByLineStr.push_back(subString);
-			s = s.substr(pos + 1);
+			lineToParse = lineToParse.substr(pos + 1);
 		}else{
 			if(!oneMatch)
 				MessageBoxA(0, "Getted content don't have '\n' symbols", "Error Parse", 0);
 			break;
 		}
 	}
-	//----replace line by line---- [end]
 
-	//-----get quote in bash.im-----[begin]
-	regex e (getRegexQuote());
+	regex expression(getRegexGetQuote());
 
 	for(unsigned i = 0; i < lineByLineStr.size(); ++i){
 		string line = lineByLineStr.at(i);
@@ -79,65 +61,68 @@ vector<std::string> Parser::doParse(string& s, MapHtmlCode map){
 
 
 
-		if (std::regex_match(line, match, e))
+		if (std::regex_match(line, match, expression))
 		{
+
 			string resultMatch = match[1].str().c_str();
 
-			regex findSpecSymbols (getHtmlSpecSymbolsRegexByName());
-			smatch matchSpecSymbols;
-			string symbol;
+			bool noMatchesByName = false;
+			bool noMatchesByCode = false;
+			while(noMatchesByName == false && noMatchesByCode == false){
+				regex findSpecSymbols (getHtmlSpecSymbolsRegexByName());
+				smatch matchSpecSymbols;
+				string symbol;
 
-			if(regex_match(resultMatch, matchSpecSymbols, findSpecSymbols)){
+				if(regex_match(resultMatch, matchSpecSymbols, findSpecSymbols)){
 
-				
-				if(!matchSpecSymbols[1].str().empty()){
-					//finded name, example = &frac34;
-					symbol = map.getViewByName(matchSpecSymbols[1].str());
-					//replace
-					resultMatch = replace(resultMatch, matchSpecSymbols[1].str(), symbol);
+					if(!matchSpecSymbols[1].str().empty()){
+						//finded name, example = &frac34;
+						symbol = map.getSymbolByName(matchSpecSymbols[1].str());
+						replaceAll(resultMatch, matchSpecSymbols[1].str(), symbol);
 
-				}
-			}
+					}
 
-			findSpecSymbols  = getHtmlSpecSymbolsRegexByCode();
+					noMatchesByName = false;
 
-			if(regex_match(resultMatch, matchSpecSymbols, findSpecSymbols)){
-				if(!matchSpecSymbols[1].str().empty()){
-					//finded name, example = &#402;
-					symbol = map.getViewByCode(matchSpecSymbols[1].str());
-					//replace
-					resultMatch = replace(resultMatch, matchSpecSymbols[1].str(), symbol);
-				}
-			}
+				}else
+					noMatchesByName = true;
 
-			replaceAll(resultMatch, "<br>", "\r\n");
-			replaceAll(resultMatch, "<br />", "\r\n");
-			/*
-			replaceAll(resultMatch, "&quot;", "\"");
-			replaceAll(resultMatch, "&lt;", "<");
-			replaceAll(resultMatch, "&gt;", ">");
-			replaceAll(resultMatch, "&#039;", "'");*/
+				findSpecSymbols  = getHtmlSpecSymbolsRegexByCode();
 
-			int max = getMaxLineLength();
+				if(regex_match(resultMatch, matchSpecSymbols, findSpecSymbols)){
 
-			if(resultMatch.length() > max){
-				int j = max;
-				while(j < resultMatch.length()){
-					int foundIndex = resultMatch.find(" ", j);
-					if(foundIndex != string::npos){
-						resultMatch.insert(foundIndex, "\r\n");
-						j = foundIndex + max;
-					}else
-						break;
+					if(!matchSpecSymbols[1].str().empty()){
+						//finded name, example = &#402;
+						symbol = map.getSymbolByCode(matchSpecSymbols[1].str());
+						replaceAll(resultMatch, matchSpecSymbols[1].str(), symbol);
+					}
+					noMatchesByCode = false;
+				}else
+					noMatchesByCode = true;
+
+				replaceAll(resultMatch, "<br>", "\r\n");
+				replaceAll(resultMatch, "<br />", "\r\n");
+
+				int max = getMaxLineLength();
+
+				if(resultMatch.length() > max){
+					int j = max;
+					while(j < resultMatch.length()){
+						int foundIndex = resultMatch.find(" ", j);
+						if(foundIndex != string::npos){
+							resultMatch.insert(foundIndex, "\r\n");
+							j = foundIndex + max;
+						}else
+							break;
+					}
 				}
 			}
 
 			result.push_back(resultMatch);
-			//MessageBoxA(0, resultMatch.c_str(), "Quote", 0);
 		}
 
 	}
-	//-----get quote in bash.im-----[end]
+
 	return result;
 
 }

@@ -13,96 +13,89 @@
 
 using namespace std;
 
+string MapHtmlCode::getSymbolByName(string key){
 
-
-bool MapHtmlCode::test_getViewByName(string key){
-	getViewByName(key);
-	return true;
-}
-
-string MapHtmlCode::getViewByName(string key){
-
-	wchar_t utfView;
-	string view;
+	wchar_t symbolW;
+	string symbolA;
 
 	map<string, string>::iterator iter;
-	iter = view_.find(key);
+	iter = mapCodesSymbols_.find(key);
 
 	string code;
-	if(iter != view_.end())
+	if(iter != mapCodesSymbols_.end())
 		code = iter->second;
 	else
-		return view;
+		return symbolA;
 
-	regex e("&#(\\w+);");
+	regex expression("&#(\\w+);");
 	smatch matchCode;
-	if(regex_match(code, matchCode, e)){
+	if(regex_match(code, matchCode, expression)){
 
 		int iCode = atoi(matchCode[1].str().c_str());
-		utfView = iCode;
+		symbolW = iCode;
 
-		char ch[20];
-		char DefChar = ' ';
-		wchar_t f[20];
-		wcscpy(f, (const wchar_t *)&utfView);
-		wcscpy(f + 1, L"\0");
-		WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)f, -1, ch, 20, &DefChar, NULL);
-		view = ch;
+		char bufferForSymbolA[bufferSize_];
+		char defChar = ' ';
+		wchar_t bufferForSymbolW[bufferSize_];
+		wcscpy(bufferForSymbolW, (const wchar_t *)&symbolW);
+		wcscpy(bufferForSymbolW + 1, L"\0");
+		WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)bufferForSymbolW, -1, bufferForSymbolA, bufferSize_, &defChar, NULL);
+		symbolA = bufferForSymbolA;
 
 	}
 
-	return view;
-
+	return symbolA;
 
 }
 
 
-string MapHtmlCode::getViewByCode(string key){
-	wchar_t utfView;
-	string view;
+string MapHtmlCode::getSymbolByCode(string key){
+
+	wchar_t symbolW;
+	string symbolA;
 	if(!key.empty()){
 		int iCode = atoi(key.c_str());
-		utfView = iCode;
+		symbolW = iCode;
 
-		char ch[20];
-		char DefChar = ' ';
-		wchar_t f[20];
-		wcscpy(f, (const wchar_t *)&utfView);
-		wcscpy(f + 1, L"\0");
-		WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)f, -1, ch, 20, &DefChar, NULL);
-		view = ch;
+		char bufferForSymbolA[bufferSize_];
+		char defChar = ' ';
+		wchar_t bufferForSymbolW[bufferSize_];
+		wcscpy(bufferForSymbolW, (const wchar_t *)&symbolW);
+		wcscpy(bufferForSymbolW + 1, L"\0");
+		WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)bufferForSymbolW, -1, bufferForSymbolA, bufferSize_, &defChar, NULL);
+		symbolA = bufferForSymbolA;
 	}
-	return view;
+	return symbolA;
+
 }
 
 
-string MapHtmlCode::getNameCodeRegex(){
+string MapHtmlCode::getExpressionRegex(){
 
-	string e (".*?(&\\w+;)(&.*;)");
-	return e;
+	string expression (".*?(&\\w+;)(&.*;)");
+	return expression;
 
 }
 
 bool MapHtmlCode::loadUpFromFile(string fileName){
+
 	ifstream inFile;
-	string ansiLine;
+	string lineA;
 
 	if(fileName.empty())
 		return false;
 
-	//wchar_t *ff = L"\u00a1";
-
 	inFile.open(fileName);
 	if(inFile.is_open()){
 		while(inFile.good()){
-			getline(inFile, ansiLine);
+			getline(inFile, lineA);
 			smatch matchNameAndCode;
 
-			regex e (getNameCodeRegex());
-			if(regex_match(ansiLine, matchNameAndCode, e)){
+			regex expression (getExpressionRegex());
+			if(regex_match(lineA, matchNameAndCode, expression)){
 				string key = matchNameAndCode[1].str().c_str();
 				string value = matchNameAndCode[2].str().c_str();
-				view_.insert(std::pair<string, string>(key, value));
+				mapCodesSymbols_.insert(std::pair<string, string>(key, value));
 			}
 
 		}
@@ -111,4 +104,5 @@ bool MapHtmlCode::loadUpFromFile(string fileName){
 		return false;
 
 	return true;
+
 }

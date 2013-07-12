@@ -10,17 +10,18 @@ class MapHtmlCode{
 
 
 public:
-	std::string getViewByName(std::string key);
+	std::string getSymbolByName(std::string key);
 
-	std::string getViewByCode(std::string key);
+	std::string getSymbolByCode(std::string key);
 
 	bool loadUpFromFile(std::string fileName);
 
-	bool test_getViewByName(std::string key);
-
 private:
-	std::map<std::string, std::string> view_;
+	std::map<std::string, std::string> mapCodesSymbols_;
 
-	std::string getNameCodeRegex();
+	std::string getExpressionRegex();
+
+	static const int bufferSize_ = 20;
+
 
 };
