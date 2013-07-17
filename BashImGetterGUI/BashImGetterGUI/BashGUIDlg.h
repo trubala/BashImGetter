@@ -1,11 +1,9 @@
 
 // BashGUIDlg.h : файл заголовка
 //
-#include "GetData.h"
+#include "QuotesBash.h"
 
 #pragma once
-
-using namespace std;
 
 // диалоговое окно CBashGUIDlg
 class CBashGUIDlg : public CDialogEx
@@ -15,16 +13,17 @@ public:
 	CBashGUIDlg(CWnd* pParent = NULL);	// стандартный конструктор
 
 
-	GetData getData;
+	QuotesBash m_dataFromBash;
 
 	enum CurrentCategoryQuotes {kNewQuotes, kRandomQuotes, kBestQuotes, kAbyssQuotes, kAbyssTopQuotes};
 
-	MapHtmlCode load;
+	MapHtmlCode m_mapHtmlCode;
 
-	vector<std::string> quotes;
-	int textEditBufferSize;
+	std::vector<std::string> m_storageQuotes;
 
-	void setQuotes(vector<std::string>& quotes);
+	int m_textEditBufferSize;
+
+	void setQuotes(std::vector<std::string>& storageQuotes);
 
 
 	// ƒанные диалогового окна

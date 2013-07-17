@@ -39,10 +39,10 @@
     <ClInclude Include="curl\curl.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
-    <ClInclude Include="GetData.h">
+    <ClInclude Include="MapHtmlCode.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
-    <ClInclude Include="MapHtmlCode.h">
+    <ClInclude Include="QuotesBash.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
   </ItemGroup>
@@ -59,10 +59,10 @@
     <ClCompile Include="Parser.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
-    <ClCompile Include="GetData.cpp">
+    <ClCompile Include="MapHtmlCode.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
-    <ClCompile Include="MapHtmlCode.cpp">
+    <ClCompile Include="QuotesBash.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
   </ItemGroup>
