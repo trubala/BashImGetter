@@ -103,7 +103,7 @@
     <ClInclude Include="BashGUIDlg.h" />
     <ClInclude Include="BashImGetterGUI.h" />
     <ClInclude Include="curl\curl.h" />
-    <ClInclude Include="GetData.h" />
+    <ClInclude Include="QuotesBash.h" />
     <ClInclude Include="MapHtmlCode.h" />
     <ClInclude Include="Parser.h" />
     <ClInclude Include="Resource.h" />
@@ -113,7 +113,7 @@
   <ItemGroup>
     <ClCompile Include="BashGUIDlg.cpp" />
     <ClCompile Include="BashImGetterGUI.cpp" />
-    <ClCompile Include="GetData.cpp" />
+    <ClCompile Include="QuotesBash.cpp" />
     <ClCompile Include="MapHtmlCode.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="stdafx.cpp">

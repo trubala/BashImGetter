@@ -9,6 +9,8 @@
 
 #include "MapHtmlCode.h"
 
+#include <vector>
+
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -17,11 +19,12 @@
 using namespace std;
 
 
-const char *newQuote = "http://bash.im";
-const char *bestQuote = "http://bash.im/best";
-const char *randomQuote = "http://bash.im/random";
-const char *abyss = "http://bash.im/abyss";
-const char *topAbyss = "http://bash.im/abysstop";
+const char *kNewQuote = "http://bash.im";
+const char *kBestQuote = "http://bash.im/best";
+const char *kRandomQuote = "http://bash.im/random";
+const char *kAbyss = "http://bash.im/abyss";
+const char *kTopAbyss = "http://bash.im/abysstop";
+const char *kFileStoragehtmlCodes = "HtmlCodes.txt";
 
 
 // Диалоговое окно CAboutDlg используется для описания сведений о приложении
@@ -65,14 +68,12 @@ CBashGUIDlg::CBashGUIDlg(CWnd* pParent /*=NULL*/)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 
-	textEditBufferSize = 0;
+	m_textEditBufferSize = 0;
 
 
 
 
-	load.loadUpFromFile("HtmlCodes.txt");
-	//load.test_getViewByName("&Theta;");
-
+	m_mapHtmlCode.loadUpFromFile(kFileStoragehtmlCodes);
 
 }
 
@@ -90,23 +91,16 @@ BEGIN_MESSAGE_MAP(CBashGUIDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BEST, &CBashGUIDlg::OnBnClickedBest)
 	ON_BN_CLICKED(IDC_RANDOM, &CBashGUIDlg::OnBnClickedRandom)
 	ON_BN_CLICKED(IDC_NEW, &CBashGUIDlg::OnBnClickedNew)
-	//	ON_BN_CLICKED(IDC_MFCMENUBUTTON1, &CBashGUIDlg::OnBnClickedMfcmenubutton1)
-	//ON_BN_CLICKED(IDC_BUTTON1, &CBashGUIDlg::OnBnClickedButton1)
 	ON_BN_CLICKED(IDC_ABYSS, &CBashGUIDlg::OnBnClickedAbyss)
 	ON_BN_CLICKED(IDC_TOP_ABYSS, &CBashGUIDlg::OnBnClickedTopAbyss)
 	ON_BN_CLICKED(IDC_ADD, &CBashGUIDlg::OnBnClickedAdd)
 END_MESSAGE_MAP()
 
 
-// обработчики сообщений CBashGUIDlg
-
 BOOL CBashGUIDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
-	// Добавление пункта "О программе..." в системное меню.
-
-	// IDM_ABOUTBOX должен быть в пределах системной команды.
 	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
 	ASSERT(IDM_ABOUTBOX < 0xF000);
 
@@ -124,10 +118,10 @@ BOOL CBashGUIDlg::OnInitDialog()
 		}
 	}
 
-	SetIcon(m_hIcon, TRUE);			// Крупный значок
-	SetIcon(m_hIcon, FALSE);		// Мелкий значок
+	SetIcon(m_hIcon, TRUE);			
+	SetIcon(m_hIcon, FALSE);		
 
-	return TRUE;  // возврат значения TRUE, если фокус не передан элементу управления
+	return TRUE; 
 }
 
 void CBashGUIDlg::OnSysCommand(UINT nID, LPARAM lParam)
@@ -147,11 +141,10 @@ void CBashGUIDlg::OnPaint()
 {
 	if (IsIconic())
 	{
-		CPaintDC dc(this); // контекст устройства для рисования
+		CPaintDC dc(this); 
 
 		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
 
-		// Выравнивание значка по центру клиентского прямоугольника
 		int cxIcon = GetSystemMetrics(SM_CXICON);
 		int cyIcon = GetSystemMetrics(SM_CYICON);
 		CRect rect;
@@ -159,7 +152,6 @@ void CBashGUIDlg::OnPaint()
 		int x = (rect.Width() - cxIcon + 1) / 2;
 		int y = (rect.Height() - cyIcon + 1) / 2;
 
-		// Нарисуйте значок
 		dc.DrawIcon(x, y, m_hIcon);
 	}
 	else
@@ -178,23 +170,23 @@ HCURSOR CBashGUIDlg::OnQueryDragIcon()
 
 void CBashGUIDlg::OnBnClickedRefresh()
 {
-	quotes.clear();
+	m_storageQuotes.clear();
 
 	switch(currentCategoryQuotes){
 	case kNewQuotes:
-		quotes = getData.GetDataFromUrl(newQuote, load);
+		m_storageQuotes = m_dataFromBash.getQuotesFromUrl(kNewQuote, m_mapHtmlCode);
 		break;
 	case kBestQuotes:
-		quotes = getData.GetDataFromUrl(bestQuote, load);
+		m_storageQuotes = m_dataFromBash.getQuotesFromUrl(kBestQuote, m_mapHtmlCode);
 		break;
 	case kRandomQuotes:
-		quotes = getData.GetDataFromUrl(randomQuote, load);
+		m_storageQuotes = m_dataFromBash.getQuotesFromUrl(kRandomQuote, m_mapHtmlCode);
 		break;
 	case kAbyssQuotes:
-		quotes = getData.GetDataFromUrl(abyss, load);
+		m_storageQuotes = m_dataFromBash.getQuotesFromUrl(kAbyss, m_mapHtmlCode);
 		break;
 	case kAbyssTopQuotes:
-		quotes = getData.GetDataFromUrl(topAbyss, load);
+		m_storageQuotes = m_dataFromBash.getQuotesFromUrl(kTopAbyss, m_mapHtmlCode);
 		break;
 	};
 
@@ -206,9 +198,9 @@ void CBashGUIDlg::OnBnClickedBest()
 {
 	currentCategoryQuotes = kBestQuotes;
 
-	quotes.clear();
-	quotes = getData.GetDataFromUrl(bestQuote, load);
-	setQuotes(quotes);
+	m_storageQuotes.clear();
+	m_storageQuotes = m_dataFromBash.getQuotesFromUrl(kBestQuote, m_mapHtmlCode);
+	setQuotes(m_storageQuotes);
 
 }
 
@@ -217,18 +209,18 @@ void CBashGUIDlg::OnBnClickedAbyss()
 {
 	currentCategoryQuotes = kAbyssQuotes;
 
-	quotes.clear();
-	quotes = getData.GetDataFromUrl(abyss, load);
-	setQuotes(quotes);
+	m_storageQuotes.clear();
+	m_storageQuotes = m_dataFromBash.getQuotesFromUrl(kAbyss, m_mapHtmlCode);
+	setQuotes(m_storageQuotes);
 }
 
 
 void CBashGUIDlg::OnBnClickedTopAbyss(){
 	currentCategoryQuotes = kAbyssTopQuotes;
 
-	quotes.clear();
-	quotes = getData.GetDataFromUrl(topAbyss, load);
-	setQuotes(quotes);
+	m_storageQuotes.clear();
+	m_storageQuotes = m_dataFromBash.getQuotesFromUrl(kTopAbyss, m_mapHtmlCode);
+	setQuotes(m_storageQuotes);
 }
 
 
@@ -238,8 +230,8 @@ void CBashGUIDlg::setQuotes(vector<std::string>& quotes){
 	CStringW buffer;
 	CStringW split("\r\n===============================================\r\n");
 
-	if(textEditBufferSize > 0)
-		textEdit.Delete(0, textEditBufferSize);
+	if(m_textEditBufferSize > 0)
+		textEdit.Delete(0, m_textEditBufferSize);
 
 	for(unsigned i = 0; i < quotes.size(); ++i)
 	{
@@ -250,7 +242,7 @@ void CBashGUIDlg::setQuotes(vector<std::string>& quotes){
 
 	}
 
-	textEditBufferSize = buffer.GetLength();
+	m_textEditBufferSize = buffer.GetLength();
 
 	textEdit.SetString(buffer);
 	UpdateData(false);
@@ -260,22 +252,18 @@ void CBashGUIDlg::OnBnClickedRandom()
 {
 	currentCategoryQuotes = kRandomQuotes;
 
-	quotes.clear();
-
-	quotes = getData.GetDataFromUrl(randomQuote, load);
-
-	setQuotes(quotes);
+	m_storageQuotes.clear();
+	m_storageQuotes = m_dataFromBash.getQuotesFromUrl(kRandomQuote, m_mapHtmlCode);
+	setQuotes(m_storageQuotes);
 }
 
 
 void CBashGUIDlg::OnBnClickedNew()
 {
 	currentCategoryQuotes = kNewQuotes;
-	quotes.clear();
-
-	quotes = getData.GetDataFromUrl(newQuote, load);
-
-	setQuotes(quotes);
+	m_storageQuotes.clear();
+	m_storageQuotes = m_dataFromBash.getQuotesFromUrl(kNewQuote, m_mapHtmlCode);
+	setQuotes(m_storageQuotes);
 
 }
 
